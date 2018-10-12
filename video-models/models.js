@@ -6,10 +6,10 @@ mongoose.Promise = global.Promise;
 const videoSchema = mongoose.Schema({
     video1: String,
     video2: String,
-    start1: Number,
-    start2: Number,
-    end1: Number,
-    end2: Number,
+    start1: String,
+    start2: String,
+    end1: String,
+    end2: String,
     user: {
         name: String,
         type: mongoose.Schema.Types.ObjectId,
@@ -33,3 +33,7 @@ videoSchema.methods.serialize = function() {
         user: this.user
     }
 }
+
+const Video = mongoose.model('Video', videoSchema);
+
+module.exports={Video};

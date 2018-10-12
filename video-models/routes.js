@@ -7,11 +7,8 @@ const jwtAuth = passport.authenticate('jwt', {session: false});
 
 
 
-route.get('/', jwtAuth, (req, res) => {
-    video
-        .find({
-            user: req.user.id
-        })
+route.get('/', (req, res) => {
+    Video.find().limit(50)
         .then(items => {
             res.json(items.map(item => item.serialize()));
         })
@@ -19,6 +16,19 @@ route.get('/', jwtAuth, (req, res) => {
             console.error(err);
             res.statusCode(500).json({ error: 'Err in Video GET' });
         });
+});
+
+route.get('/user/:userId', (req, res) => {
+    Video.find({
+        user: req.params.userId
+    })
+    .then(items => {
+        res.json(items.map(item => item.serialize()))
+    })
+    .catch(err =>{
+        console.error(err);
+        res.statusCode(500).json({ error: 'Err in User Video Get' });
+    });
 });
 
 route.get('/:id',jwtAuth, (req, res) => {
@@ -30,7 +40,7 @@ route.get('/:id',jwtAuth, (req, res) => {
         });
 });
 
-route.post('/', jwtAuth, (req, res) => {
+route.post('/',jwtAuth, (req, res) => {
     const requiredFields = ['video1','video2','start1', 'start2', 'end1', 'end2'];
     for (let i = 0; i < requiredFields.length; i++) {
         const field = requiredFields[i];
@@ -42,14 +52,14 @@ route.post('/', jwtAuth, (req, res) => {
     }
     console.log(req.user,"From routes.js 43");
     
-    Video
-        .create({
+    Video.create({
             video1: req.body.video1,
             video2: req.body.video2,
             start1: req.body.start1,
             start2: req.body.start2,
             end1: req.body.end1,
-            end2: req.body.end2
+            end2: req.body.end2,
+            user: req.user.id
         })
         .then(Video => res.status(201).json(Video.serialize()))
         .catch(err => {

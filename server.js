@@ -5,7 +5,7 @@ const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 const passport = require('passport');
 const session = require('express-session');
 const morgan = require('morgan');
-const route = require('./pantry-items/routes');
+const route = require('./video-models/routes');
 const { PORT, DATABASE_URL } = require('./config')
 const mongoose = require('mongoose');
 const cookieParser=require('cookie-parser');
@@ -21,10 +21,14 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 mongoose.Promise = global.Promise;
 //app.listen(process.env.PORT || 8080);
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    next();
+});
 
-
-app.use('/items', route);
-app.use('/pantry/users', usersRouter);
+app.use('/videos', route);
+app.use('/users', usersRouter);
 app.use('/login', authRouter);
 
 
@@ -33,11 +37,7 @@ app.use('*', function (req, res) {
     res.status(404).json({ message: 'Not Found' });
 });
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+
 
 let server;
 //hi

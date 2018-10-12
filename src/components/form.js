@@ -1,7 +1,7 @@
 import React from 'react';
 import './form.css';
 import {reduxForm, Field} from 'redux-form';
-import {setVideo1, setVideo2, setStart1, setStart2, setEnd1, setEnd2} from '../actions'
+import {postComparison} from '../actions'
 import { connect } from 'net';
 
 
@@ -10,12 +10,10 @@ export class CreateComparison extends React.Component {
     onSubmit(values) {
         console.log(values);
      
-        this.props.dispatch(setVideo1(values.video1))
-        this.props.dispatch(setVideo2(values.video2))
-        this.props.dispatch(setStart1(values.start1))
-        this.props.dispatch(setStart2(values.start2))
-        this.props.dispatch(setEnd1(values.end1))
-        this.props.dispatch(setEnd2(values.end2))
+        this.props.dispatch(postComparison(values));
+
+        
+
         
         
         

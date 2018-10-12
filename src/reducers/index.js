@@ -1,4 +1,4 @@
-import {SET_VIDEO_1, SET_VIDEO_2, SET_START_1, SET_START_2, SET_END_1, SET_END_2, PLAY_BUTTON} from '../actions'
+import {SET_COMPARISON, PLAY_BUTTON, SET_USER, GET_VIDEOS, SET_AUTH} from '../actions'
 
 const initialState = {
     video1: null,
@@ -7,52 +7,49 @@ const initialState = {
     start2: null,
     end1: null,
     end2: null,
-    autoplay:0
+    autoplay:0,
+    videoList: [],
+    user: null
 }
 
 export default function videoReducer(state=initialState, action)  {
-    if(action.type===SET_VIDEO_1) {
+    if(action.type===SET_COMPARISON) {
         return Object.assign({}, state, {
-            video1: action.video1
+            video1: action.comparison.video1,
+            video2: action.comparison.video2,
+            start1: action.comparison.start1,
+            start2: action.comparison.start2,
+            end1: action.comparison.end1,
+            end2: action.comparison.end2
         });
     }
 
-    if(action.type===SET_VIDEO_2) {
+    if(action.type===SET_USER) {
+        console.log(action.user)
+        localStorage.authToken=action.authToken;
+        console.log(localStorage.authToken)
         return Object.assign({}, state, {
-            video2: action.video2
-        });
+            user:action.id
+        })
     }
 
-    if(action.type===SET_START_1) {
+    if(action.type===GET_VIDEOS) {
         return Object.assign({}, state, {
-            start1: action.start1
-        });
+            videoList: action.user
+        })
     }
-
-    if(action.type===SET_START_2) {
-        return Object.assign({}, state, {
-            start2: action.start2
-        });
-    }
-
-    if(action.type===SET_END_1) {
-        return Object.assign({}, state, {
-            end1: action.end1
-        });
-    }
-
-    if(action.type===SET_END_2) {
-        return Object.assign({}, state, {
-            end2: action.end2
-        });
-    }
-
+   
     if(action.type===PLAY_BUTTON) {
         return Object.assign({}, state, {
             autoplay: action.autoplay
         })
     }
-    console.log(state);
+
+    if(action.type===SET_AUTH) {
+        console.log(action)
+        localStorage.authToken=action.auth.authToken
+    }
+    
     return state
 }
 

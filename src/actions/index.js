@@ -1,37 +1,9 @@
-export const SET_VIDEO_1 = 'SET_VIDEO_1'
-export const setVideo1 = video1 => ({
-    type:SET_VIDEO_1,
-    video1
-})
+const {API_BASE_URL} = require('../config')
 
-export const SET_VIDEO_2 = 'SET_VIDEO_2'
-export const setVideo2 = video2 => ({
-    type:SET_VIDEO_2,
-    video2
-})
-
-export const SET_START_1='SET_START_1'
-export const setStart1 = start1 => ({
-    type: SET_START_1,
-    start1
-})
-
-export const SET_START_2='SET_START_2'
-export const setStart2 = start2 => ({
-    type: SET_START_2,
-    start2
-})
-
-export const SET_END_2='SET_END_2'
-export const setEnd2 = end2 => ({
-    type: SET_END_2,
-    end2
-})
-
-export const SET_END_1='SET_END_1'
-export const setEnd1 = end1 => ({
-    type: SET_END_1,
-    end1
+export const SET_COMPARISON='SET_COMPARISON'
+export const setComparison = comparison =>({
+    type: SET_COMPARISON,
+    comparison
 })
 
 export const PLAY_BUTTON='PLAY_BUTTON'
@@ -39,3 +11,108 @@ export const playButton = autoplay => ({
     type: PLAY_BUTTON,
     autoplay
 })
+
+export const SET_USER = 'SET_USER';
+export const setUser = user =>({
+    type: SET_USER,
+    user
+})
+
+export const GET_VIDEOS = 'GET_VIDEOS';
+export const getVideos = user =>({
+    type:GET_VIDEOS,
+    user
+})
+
+export const GET_USER = 'GET_USER';
+export const getUser = user =>({
+    type: GET_USER,
+    user
+})
+
+export const SET_AUTH='SET_AUTH';
+export const setAuth = auth =>({
+    type: SET_AUTH,
+    auth
+})
+
+export const signIn = user => dispatch =>{
+    fetch(`${API_BASE_URL}/users`, {
+        method: 'get',
+        headers: {'content-type': 'application/json'}
+    }).then(res=> {
+        if(!res.ok){
+            return Promise.reject(res.statusText);
+        } 
+        return res.json()
+    }).then(user=> {
+        console.log(user)
+        dispatch(getUser(user));
+        console.log(user)
+    });
+    
+}
+ 
+
+export const getProfile = userId => dispatch =>{
+fetch(`${API_BASE_URL}/user/${userId}`, {
+    method:'get',
+    headers: {'content-type': 'application/json'}
+}).then(res => {
+    if(!res.ok){
+        return Promise.reject(res.statusText);
+    }
+    return res.json()
+}).then(user=> {
+    dispatch(getVideos(user));
+});
+}
+
+export const newUser = user => dispatch =>{
+    fetch(`${API_BASE_URL}/users`, {
+        method:'post',
+        body: JSON.stringify(user),
+        headers: {'content-type': 'application/json'}
+    }).then(res => {
+        if(!res.ok) {
+            return Promise.reject(res.statusText);
+        }
+        return res.json();
+    }).then(board => {
+        dispatch(setUser(user));
+        dispatch(getAuth(user));
+    });
+}
+
+
+export const postComparison = comparison => dispatch => {
+    fetch(`${API_BASE_URL}/videos`,{
+        method:'post',
+        body:JSON.stringify(comparison),
+        headers: {'content-type': 'application/json',
+                'authorization': 'Bearer ' + localStorage.authToken
+    }
+    }).then(res => {
+        if (!res.ok) {
+            return Promise.reject(res.statusText);
+        }
+        return res.json();
+    }).then(videos => {
+        dispatch(setComparison(videos));
+    });
+};
+
+export const getAuth = user => dispatch => {
+    fetch(`${API_BASE_URL}/login`, {
+        method: 'post',
+        body: JSON.stringify(user),
+        headers: {'content-type': 'application/json'}
+    }).then(res => {
+        if(!res.ok){
+            return Promise.reject(res.statusText);
+        }
+        return res.json()
+    }).then(auth => {
+        dispatch(setAuth(auth));
+    });
+};
