@@ -1,16 +1,17 @@
 import React from 'react'
 import './signin.css'
-import {signIn, getAuth} from '../actions'
+import {signIn, getAuth, setUser} from '../actions'
 import {reduxForm, Field} from 'redux-form';
-import {connect} from 'net'
+import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 export class SignIn extends React.Component {
     onSubmit(values) {
         console.log(values);
         
      
-        this.props.dispatch(signIn(values));
         this.props.dispatch(getAuth(values))
+        
              
         
         
@@ -20,6 +21,13 @@ export class SignIn extends React.Component {
 
 
     render() {
+        console.log(this.props.user)
+        if(this.props.user){
+            return (
+                <Redirect to="/home" />
+            )
+        }
+
         return (
             <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values)
             )}>
@@ -34,7 +42,13 @@ export class SignIn extends React.Component {
         )
     }
 }
+const mapStateToProps = state =>( {
+    user: state.videoReducer.user
+})
+const SignInConnected = connect(mapStateToProps)(SignIn)
 
 export default reduxForm({
     form: 'create'
-})(SignIn);
+})(SignInConnected);
+
+

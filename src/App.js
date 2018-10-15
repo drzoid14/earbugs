@@ -16,6 +16,7 @@ import Profile from './components/profile.js'
 import ViewVideo from './components/viewvideo.js'
 import SignUpForm from './components/signup.js'
 import SignInForm from './components/signin.js'
+import Home from './components/home.js'
 
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
                  <Route exact path="/signin" component = {SignInForm} />
                  <Route exact path="/signup" component = {SignUpForm} />
                  <Route exact path="/create" component = {VideoBox} />
+                 <Route exact path="/home" component = {Home} />
             </Switch>
         </main>
       </div>

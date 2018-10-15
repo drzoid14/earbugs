@@ -37,7 +37,7 @@ export const setAuth = auth =>({
 })
 
 export const signIn = user => dispatch =>{
-    fetch(`${API_BASE_URL}/users`, {
+    return fetch(`${API_BASE_URL}/users`, {
         method: 'get',
         headers: {'content-type': 'application/json'}
     }).then(res=> {
@@ -48,14 +48,14 @@ export const signIn = user => dispatch =>{
     }).then(user=> {
         console.log(user)
         dispatch(getUser(user));
-        console.log(user)
+
     });
     
 }
  
 
 export const getProfile = userId => dispatch =>{
-fetch(`${API_BASE_URL}/user/${userId}`, {
+fetch(`${API_BASE_URL}/videos/user/${userId}`, {
     method:'get',
     headers: {'content-type': 'application/json'}
 }).then(res => {
@@ -78,8 +78,9 @@ export const newUser = user => dispatch =>{
             return Promise.reject(res.statusText);
         }
         return res.json();
-    }).then(board => {
-        dispatch(setUser(user));
+    }).then(resp => {
+        console.log(resp)
+        console.log(user)
         dispatch(getAuth(user));
     });
 }
@@ -113,6 +114,6 @@ export const getAuth = user => dispatch => {
         }
         return res.json()
     }).then(auth => {
-        dispatch(setAuth(auth));
+        dispatch(setUser(auth));
     });
 };

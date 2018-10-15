@@ -1,9 +1,9 @@
 import React from 'react';
 import {reduxForm, Field} from 'redux-form';
-import {postComparison} from '../actions'
-import { connect } from 'net';
-import {newUser} from '../actions'
+import {newUser, signIn, getAuth, setUser} from '../actions'
 import './signup.css'
+import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 
 
 
@@ -14,8 +14,11 @@ export class SignUp extends React.Component {
             alert('Passwords do not match')
             return
         } else{
-     
-        this.props.dispatch(newUser(values));     
+            
+            
+        this.props.dispatch(newUser(values)); 
+        
+
         
         }
     }
@@ -24,6 +27,12 @@ export class SignUp extends React.Component {
 
 
     render() {
+        console.log(this.props.user)
+        if(this.props.user){
+            return(
+                <Redirect to="/home" />
+            )
+        }
         return (
             <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values)
             )}>
@@ -40,6 +49,11 @@ export class SignUp extends React.Component {
     }
 }
 
+const mapStateToProps = state =>( {
+    user: state.videoReducer.user
+})
+const SignUpConnected = connect(mapStateToProps)(SignUp)
+
 export default reduxForm({
     form: 'create'
-})(SignUp);
+})(SignUpConnected);

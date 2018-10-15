@@ -11,6 +11,9 @@ export class Profile extends React.Component{
     componentDidMount(){
         const userId = this.props.match.params.userId
         this.props.dispatch(getProfile(userId))
+        console.log(this.props.match.params)
+        console.log(this.props)
+       
     }
 
     render(){
