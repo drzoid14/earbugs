@@ -7,7 +7,7 @@ export function SideBar(props) {
 
     
 
-    let userId = props.user ? props.user.id : null
+    let userId = localStorage.id ? localStorage.id : null
 
     return (
     

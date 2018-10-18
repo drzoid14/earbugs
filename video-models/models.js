@@ -17,7 +17,8 @@ const videoSchema = mongoose.Schema({
         unique: false,
         required: [true, 'No User id found']
     
-    }
+    },
+    title: String
 
 })
 
@@ -30,7 +31,8 @@ videoSchema.methods.serialize = function() {
         start2: this.start2,
         end1: this.end1,
         end2: this.end2,
-        user: this.user
+        user: this.user,
+        title: this.title
     }
 }
 

@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import YouTubeComponent from './components/youtube.js'
-import ReduxForm from './components/form.js'
-import {connect} from 'react-redux'
-import {playButton} from './actions'
 import {
   BrowserRouter as Router,
   Route,
@@ -13,10 +9,10 @@ import {
 import SideBar from './components/sidebar.js'
 import VideoBox from './components/videobox.js'
 import Profile from './components/profile.js'
-import ViewVideo from './components/viewvideo.js'
 import SignUpForm from './components/signup.js'
 import SignInForm from './components/signin.js'
 import Home from './components/home.js'
+import View from './components/view.js'
 
 
 class App extends Component {
@@ -35,6 +31,7 @@ class App extends Component {
                  <Route exact path="/signup" component = {SignUpForm} />
                  <Route exact path="/create" component = {VideoBox} />
                  <Route exact path="/home" component = {Home} />
+                 <Route exact path="/view/:videoId" component={View} />
             </Switch>
         </main>
       </div>

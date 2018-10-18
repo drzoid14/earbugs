@@ -52,6 +52,21 @@ export const signIn = user => dispatch =>{
     });
     
 }
+
+export const getFile = videoId => dispatch =>{
+    fetch(`${API_BASE_URL}/videos/${videoId}`, {
+        method: 'get',
+        headers: {'content-type': 'application/json'}
+    }).then(res => {
+        if(!res.ok){
+            return Promise.reject(res.statusText)
+        }
+        return res.json()
+    }).then(resp => {
+        console.log(resp)
+        dispatch(setComparison(resp))
+    })
+}
  
 
 export const getProfile = userId => dispatch =>{
@@ -66,6 +81,20 @@ fetch(`${API_BASE_URL}/videos/user/${userId}`, {
 }).then(user=> {
     dispatch(getVideos(user));
 });
+} 
+
+export const getHome = home => dispatch => {
+    fetch(`${API_BASE_URL}/videos`, {
+        method: 'get',
+        headers: {'content-type': 'application/json'}
+    }).then(res=> {
+        if(!res.ok) {
+            return Promise.reject(res.statusText);
+        }
+        return res.json()
+    }).then(resp =>{
+        dispatch(getVideos(resp))
+    })
 }
 
 export const newUser = user => dispatch =>{

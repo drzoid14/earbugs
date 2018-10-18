@@ -1,6 +1,6 @@
 import React from 'react';
 import {reduxForm, Field} from 'redux-form';
-import {newUser, signIn, getAuth, setUser} from '../actions'
+import {newUser} from '../actions'
 import './signup.css'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
@@ -10,7 +10,7 @@ import {Redirect} from 'react-router-dom'
 export class SignUp extends React.Component {
     onSubmit(values) {
         console.log(values);
-        if(values.password != values.confirmpass){
+        if(values.password !== values.confirmpass){
             alert('Passwords do not match')
             return
         } else{

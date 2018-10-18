@@ -43,7 +43,8 @@ export class VideoBox extends React.Component{
     start2: state.videoReducer.start2,
     end1: state.videoReducer.end1,
     end2: state.videoReducer.end2,
-    autoplay: state.videoReducer.autoplay
+    autoplay: state.videoReducer.autoplay,
+    user: state.videoReducer.user
   });
   
   export default connect(mapStateToProps)(VideoBox);

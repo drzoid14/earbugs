@@ -1,6 +1,6 @@
 import React from 'react'
 import './signin.css'
-import {signIn, getAuth, setUser} from '../actions'
+import {getAuth} from '../actions'
 import {reduxForm, Field} from 'redux-form';
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'

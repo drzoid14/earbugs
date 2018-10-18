@@ -31,7 +31,7 @@ route.get('/user/:userId', (req, res) => {
     });
 });
 
-route.get('/:id',jwtAuth, (req, res) => {
+route.get('/:id', (req, res) => {
     Video.findById(req.params.id)
         .then(item => res.json(item.serialize()))
         .catch(err => {
@@ -59,7 +59,8 @@ route.post('/',jwtAuth, (req, res) => {
             start2: req.body.start2,
             end1: req.body.end1,
             end2: req.body.end2,
-            user: req.user.id
+            user: req.user.id,
+            title: req.body.title
         })
         .then(Video => res.status(201).json(Video.serialize()))
         .catch(err => {

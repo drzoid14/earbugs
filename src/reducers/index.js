@@ -1,4 +1,4 @@
-import {SET_COMPARISON, PLAY_BUTTON, SET_USER, GET_VIDEOS, SET_AUTH} from '../actions';
+import {SET_COMPARISON, PLAY_BUTTON, SET_USER, GET_VIDEOS} from '../actions';
 import * as JWT from 'jwt-decode';
 
 
@@ -11,7 +11,7 @@ const initialState = {
     end1: null,
     end2: null,
     autoplay:0,
-    videoList: null,
+    videoList: [],
     user: null,
     title: null
 }
@@ -36,6 +36,7 @@ export default function videoReducer(state=initialState, action)  {
         
         console.log(action.user.authToken)
         localStorage.authToken=action.user.authToken;
+        localStorage.id=decodedToken.user.id
         return Object.assign({}, state, {
             user: decodedToken.user
         })

@@ -2,7 +2,6 @@ import React from 'react';
 import './form.css';
 import {reduxForm, Field} from 'redux-form';
 import {postComparison} from '../actions'
-import { connect } from 'net';
 
 
 
