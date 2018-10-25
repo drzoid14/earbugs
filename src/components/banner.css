@@ -4,10 +4,15 @@
     position:fixed;
     top:0;
     left:0;
-    background-image: url('./earbuds_header.jpg');
+    background-image: url('./FreeVector-Musical-Notes-Pattern.jpg');
     background-size: 100% 100%;
     background-repeat:no-repeat;
     
+}
+
+.banner h1{
+    background-color:red;
+    color:white;
 }
 
 
