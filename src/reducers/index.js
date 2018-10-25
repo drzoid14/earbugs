@@ -1,4 +1,4 @@
-import {SET_COMPARISON, PLAY_BUTTON, SET_USER, GET_VIDEOS} from '../actions';
+import {SET_COMPARISON, PLAY_BUTTON, SET_USER, GET_VIDEOS, LOGOUT} from '../actions';
 import * as JWT from 'jwt-decode';
 
 
@@ -17,6 +17,13 @@ const initialState = {
 }
 
 export default function videoReducer(state=initialState, action)  {
+
+    if(action.type===LOGOUT) {
+        console.log('logging out')
+        localStorage.clear();
+        return Object.assign({}, initialState)
+    }
+
     if(action.type===SET_COMPARISON) {
         return Object.assign({}, state, {
             video1: action.comparison.video1,

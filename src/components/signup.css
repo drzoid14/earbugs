@@ -1,9 +1,5 @@
-form {
-    display: flex;
-    justify-content:center;
-    align-items: center;
+#signInForm {
+    display: block;
+    grid-template-columns: repeat(2, 50% )
 }
 
-#username, #password, #confirmpass {
-    display: block;
-}

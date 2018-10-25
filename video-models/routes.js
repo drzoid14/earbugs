@@ -8,7 +8,7 @@ const jwtAuth = passport.authenticate('jwt', {session: false});
 
 
 route.get('/', (req, res) => {
-    Video.find().limit(50)
+    Video.find().limit(50).sort({created:-1})
         .then(items => {
             res.json(items.map(item => item.serialize()));
         })

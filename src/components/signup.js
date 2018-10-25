@@ -34,7 +34,7 @@ export class SignUp extends React.Component {
             )
         }
         return (
-            <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values)
+            <form id="signUpForm" onSubmit={this.props.handleSubmit(values => this.onSubmit(values)
             )}>
                 <label htmlFor="username">Username</label>
                 <Field name="username" id="username" type="text" component="input" placeholder="Choose Your Name" />

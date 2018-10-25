@@ -1,5 +1,15 @@
+main {
+  height:85%;
+  margin-top:15%
+}
+
+body {
+  height:100%
+}
+
 .App {
   text-align: center;
+  width:100%
 }
 
 .App-logo {
@@ -20,13 +30,6 @@
 
 .App-intro {
   font-size: large;
-}
-
-.videoBox{
-  width:50vw;
-  height:50vw;
-  
-
 }
 
 @keyframes App-logo-spin {

@@ -6,13 +6,14 @@ import {
   Redirect,
   Switch
 } from 'react-router-dom';
-import SideBar from './components/sidebar.js'
 import VideoBox from './components/videobox.js'
 import Profile from './components/profile.js'
 import SignUpForm from './components/signup.js'
 import SignInForm from './components/signin.js'
 import Home from './components/home.js'
 import View from './components/view.js'
+import history from './history'
+import Banner from './components/banner'
 
 
 class App extends Component {
@@ -20,9 +21,11 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router history={history}>
       <div className="App" id="app">
-        <SideBar />
+      <header>
+        <Banner />
+      </header>
         <main>
             <Switch>
                 <Redirect exact from="/" to="/home" />

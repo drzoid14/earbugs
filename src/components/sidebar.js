@@ -1,30 +1,33 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {logout} from '../actions'
 import './sidebar.css';
 
 export function SideBar(props) {
 
-    
-
+    let login;
+    let log;
     let userId = localStorage.id ? localStorage.id : null
-
+    if(userId) {
+        userId = <a href={`/profile/${userId}`}>Profile</a>
+        log=<a href="/signin">Logout</a>
+    } else {
+        log = <a href="/signup">Sign Up</a>
+        login= <a href="/signin">Log In</a>
+    }
+    
     return (
     
-        <div className="sidebar sidebar-left">
-            <nav className="folder-menu">
-                <ul className="folder-menu-list">
-                <li><a href="/home">Home</a></li>
-                <li><Link to ={`/profile/${userId}`}>
-                    Profile
-                    </Link>
-                </li>
-                <li><a href="/create">Create</a></li>
-                <li><a href="/signin">Sign In</a></li>
-                <li><a href="/signup"> Sign up</a></li>
-                </ul>
-            </nav>
-        </div>
+        <div className="dropdown">
+  <button className="dropbtn">Menu</button>
+  <div className="dropdown-content">
+    <a href="/home">Home</a>
+    {userId}
+    {log}
+    {login}
+  </div>
+</div>
     )
 }
 

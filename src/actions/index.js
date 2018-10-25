@@ -1,148 +1,173 @@
-const {API_BASE_URL} = require('../config')
+const { API_BASE_URL } = require('../config')
 
-export const SET_COMPARISON='SET_COMPARISON'
-export const setComparison = comparison =>({
+export const SET_COMPARISON = 'SET_COMPARISON'
+export const setComparison = comparison => ({
     type: SET_COMPARISON,
     comparison
 })
 
-export const PLAY_BUTTON='PLAY_BUTTON'
+export const LOGOUT = 'LOGOUT'
+export const logout = user => ({
+    type: LOGOUT,
+    user
+})
+
+export const PLAY_BUTTON = 'PLAY_BUTTON'
 export const playButton = autoplay => ({
     type: PLAY_BUTTON,
     autoplay
 })
 
 export const SET_USER = 'SET_USER';
-export const setUser = user =>({
+export const setUser = user => ({
     type: SET_USER,
     user
 })
 
 export const GET_VIDEOS = 'GET_VIDEOS';
-export const getVideos = user =>({
-    type:GET_VIDEOS,
+export const getVideos = user => ({
+    type: GET_VIDEOS,
     user
 })
 
 export const GET_USER = 'GET_USER';
-export const getUser = user =>({
+export const getUser = user => ({
     type: GET_USER,
     user
 })
 
-export const SET_AUTH='SET_AUTH';
-export const setAuth = auth =>({
+export const SET_AUTH = 'SET_AUTH';
+export const setAuth = auth => ({
     type: SET_AUTH,
     auth
 })
 
-export const signIn = user => dispatch =>{
+export const signIn = user => dispatch => {
     return fetch(`${API_BASE_URL}/users`, {
         method: 'get',
-        headers: {'content-type': 'application/json'}
-    }).then(res=> {
-        if(!res.ok){
+        headers: { 'content-type': 'application/json' }
+    }).then(res => {
+        if (!res.ok) {
             return Promise.reject(res.statusText);
-        } 
+        }
         return res.json()
-    }).then(user=> {
+    }).then(user => {
         console.log(user)
-        dispatch(getUser(user));
+        return dispatch(getUser(user));
 
     });
-    
+
 }
 
-export const getFile = videoId => dispatch =>{
-    fetch(`${API_BASE_URL}/videos/${videoId}`, {
+export const getFile = videoId => dispatch => {
+    return fetch(`${API_BASE_URL}/videos/${videoId}`, {
         method: 'get',
-        headers: {'content-type': 'application/json'}
+        headers: { 'content-type': 'application/json' }
     }).then(res => {
-        if(!res.ok){
+        if (!res.ok) {
             return Promise.reject(res.statusText)
         }
         return res.json()
     }).then(resp => {
         console.log(resp)
-        dispatch(setComparison(resp))
+       return dispatch(setComparison(resp))
     })
 }
- 
 
-export const getProfile = userId => dispatch =>{
-fetch(`${API_BASE_URL}/videos/user/${userId}`, {
-    method:'get',
-    headers: {'content-type': 'application/json'}
-}).then(res => {
-    if(!res.ok){
-        return Promise.reject(res.statusText);
-    }
-    return res.json()
-}).then(user=> {
-    dispatch(getVideos(user));
-});
-} 
+export const deleteVideo = videoId => dispatch => {
+    return fetch(`${API_BASE_URL}/videos/${videoId}`, {
+        method: 'delete',
+        headers: {
+            'content-type': 'application/json',
+            authorization: 'Bearer ' + localStorage.authToken
+        }
+    }).then(res => {
+        if (!res.ok) {
+            return Promise.reject(res.statusText)
+        }
 
-export const getHome = home => dispatch => {
-    fetch(`${API_BASE_URL}/videos`, {
+    }).then(resp => {
+        console.log(localStorage.id)
+        return dispatch(getProfile(localStorage.id))
+    })
+}
+
+
+export const getProfile = userId => dispatch => {
+    return fetch(`${API_BASE_URL}/videos/user/${userId}`, {
         method: 'get',
-        headers: {'content-type': 'application/json'}
-    }).then(res=> {
-        if(!res.ok) {
+        headers: { 'content-type': 'application/json' }
+    }).then(res => {
+        if (!res.ok) {
             return Promise.reject(res.statusText);
         }
         return res.json()
-    }).then(resp =>{
-        dispatch(getVideos(resp))
+    }).then(user => {
+        return dispatch(getVideos(user));
+    });
+}
+
+export const getHome = home => dispatch => {
+    return fetch(`${API_BASE_URL}/videos`, {
+        method: 'get',
+        headers: { 'content-type': 'application/json' }
+    }).then(res => {
+        if (!res.ok) {
+            return Promise.reject(res.statusText);
+        }
+        return res.json()
+    }).then(resp => {
+        return dispatch(getVideos(resp))
     })
 }
 
-export const newUser = user => dispatch =>{
-    fetch(`${API_BASE_URL}/users`, {
-        method:'post',
+export const newUser = user => dispatch => {
+    return fetch(`${API_BASE_URL}/users`, {
+        method: 'post',
         body: JSON.stringify(user),
-        headers: {'content-type': 'application/json'}
+        headers: { 'content-type': 'application/json' }
     }).then(res => {
-        if(!res.ok) {
+        if (!res.ok) {
             return Promise.reject(res.statusText);
         }
         return res.json();
     }).then(resp => {
         console.log(resp)
         console.log(user)
-        dispatch(getAuth(user));
+        return dispatch(getAuth(user));
     });
 }
 
 
 export const postComparison = comparison => dispatch => {
-    fetch(`${API_BASE_URL}/videos`,{
-        method:'post',
-        body:JSON.stringify(comparison),
-        headers: {'content-type': 'application/json',
-                'authorization': 'Bearer ' + localStorage.authToken
-    }
+    return fetch(`${API_BASE_URL}/videos`, {
+        method: 'post',
+        body: JSON.stringify(comparison),
+        headers: {
+            'content-type': 'application/json',
+            'authorization': 'Bearer ' + localStorage.authToken
+        }
     }).then(res => {
         if (!res.ok) {
             return Promise.reject(res.statusText);
         }
         return res.json();
     }).then(videos => {
-        dispatch(setComparison(videos));
+        return dispatch(setComparison(videos));
     });
 };
 
 export const getAuth = user => dispatch => {
-    fetch(`${API_BASE_URL}/login`, {
+    return fetch(`${API_BASE_URL}/login`, {
         method: 'post',
         body: JSON.stringify(user),
-        headers: {'content-type': 'application/json'}
+        headers: { 'content-type': 'application/json' }
     }).then(res => {
-        if(!res.ok){
+        if (!res.ok) {
             return Promise.reject(res.statusText);
         }
         return res.json()
     }).then(auth => {
-        dispatch(setUser(auth));
+        return dispatch(setUser(auth));
     });
 };

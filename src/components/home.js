@@ -17,7 +17,7 @@ componentDidMount(){
         const videos = this.props.videoList.map(video =>
             <li key={video.id} className="folder-menu-list-item">
                 <Link to={`/view/${video.id}`}>
-                    1 {video.title}
+                     -{video.title}
                 </Link>
             </li>
         )

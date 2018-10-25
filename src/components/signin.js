@@ -1,6 +1,6 @@
 import React from 'react'
 import './signin.css'
-import {getAuth} from '../actions'
+import {getAuth, logout} from '../actions'
 import {reduxForm, Field} from 'redux-form';
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -18,7 +18,10 @@ export class SignIn extends React.Component {
     }
  
 
+    componentDidMount(){
+        this.props.dispatch(logout(null))
 
+    }
 
     render() {
         console.log(this.props.user)
@@ -29,16 +32,17 @@ export class SignIn extends React.Component {
         }
 
         return (
-            <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values)
+            <form id="signInForm" onSubmit={this.props.handleSubmit(values => this.onSubmit(values)
             )}>
                 <label htmlFor="username">Username</label>
                 <Field name="username" id="username" type="text" component="input" placeholder="Choose Your Name" />
-                <label hmtlFor="password">password</label>
+                <label hmtlFor="password">Password</label>
                 <Field name="password" id="password" type="password" component="input" />
-
-
+                <a href="/signup"><button type="button">Create Account</button></a>
                 <button type="submit">Sign In</button>
+
             </form>
+
         )
     }
 }
