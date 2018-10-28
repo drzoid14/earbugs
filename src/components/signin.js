@@ -26,6 +26,7 @@ export class SignIn extends React.Component {
     render() {
         console.log(this.props.user)
         if(this.props.user){
+            localStorage.username=this.props.user.username
             return (
                 <Redirect to="/home" />
             )

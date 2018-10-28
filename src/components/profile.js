@@ -28,9 +28,11 @@ export class Profile extends React.Component{
             </li>
         )
 
+        const username=localStorage.username
+
     return(
     <div>
-        <h1> Hi There</h1>
+        <h1>{username}</h1>
         <a href="/create">Create New</a>
         <ul className = "videos">
             {videos}
