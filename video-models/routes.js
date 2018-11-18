@@ -76,7 +76,7 @@ route.delete('/:id',jwtAuth, (req, res) => {
             res.status(204).json({ message: 'success' });
         })
         .catch(err => {
-            console.error(serr);
+            console.error(err);
             res.status(500).json({ error: 'ERR in Delete' });
         });
 });
