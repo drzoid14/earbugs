@@ -8,4 +8,4 @@ deploy:
     secure: d8CnWsjcSAWD2zR7zMS3og
     app: desolate-meadow-46997
   on:
-    repo: drzoid14/pantry-manager 
+    repo: drzoid14/earbugs
