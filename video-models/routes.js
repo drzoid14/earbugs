@@ -9,12 +9,13 @@ const jwtAuth = passport.authenticate('jwt', {session: false});
 
 route.get('/', (req, res) => {
     Video.find().limit(50).sort({created:-1})
-        .then(items => {
+     .populate('user','username')   
+    .then(items => {
             res.json(items.map(item => item.serialize()));
         })
         .catch(err => {
             console.error(err);
-            res.statusCode(500).json({ error: 'Err in Video GET' });
+         res.statusCode(500).json({ error: 'Err in Video GET' });
         });
 });
 

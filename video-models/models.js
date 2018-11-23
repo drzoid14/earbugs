@@ -11,7 +11,6 @@ const videoSchema = mongoose.Schema({
     end1: String,
     end2: String,
     user: {
-        name: String,
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         unique: false,
