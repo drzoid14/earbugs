@@ -23,6 +23,7 @@ route.get('/user/:userId', (req, res) => {
     Video.find({
         user: req.params.userId
     })
+    .populate('user','username')
     .then(items => {
         res.json(items.map(item => item.serialize()))
     })
@@ -33,8 +34,9 @@ route.get('/user/:userId', (req, res) => {
 });
 
 route.get('/:id', (req, res) => {
-    Video.findById(req.params.id)
-        .then(item => res.json(item.serialize()))
+    Video.find({_id: req.params.id})
+        .populate('user','username')
+        .then(items => res.json(items[0].serialize()))
         .catch(err => {
             console.error(err);
             res.status(500).json({ error: 'ERR in Video GET ID' });
